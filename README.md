@@ -9,10 +9,16 @@ A minimalistic PDF Viewer written in C++ using `Qt` and `Poppler` that uses `VIM
 	
 1. Qt6
 2. Poppler
+3. Linux :)
 
 # Installation
 
-Work in Progress
+```
+git clone https://github.com/dheerajshenoy/Dodo.git
+cd Dodo
+make
+<!-- hello world -->
+```
 
 # Features
 
