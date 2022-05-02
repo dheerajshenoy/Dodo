@@ -5,8 +5,7 @@
 4. Fit page to width, height
 5. Custom background page rendering
 
-
-* Mouse Scroll Page Turn
+* DONE
 1. ~~StatusBar~~
 2. ~~Page Count~~
 3. ~~Page Number~~
@@ -17,3 +16,5 @@
 	 a. ~~Open File~~
    b. ~~Close File~~
    c. ~~Quit Application~~
+
+* Mouse Scroll Page Turn
