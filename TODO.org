@@ -1,16 +1,19 @@
-* +Mouse Scroll Page Turn+
-* +StatusBar+
-* +Dark Mode+
+* TODO
+** Sectionwise font
+** Show current section in the outline menu
+** Config
+** Fit page to width, height
+** Custom background page rendering
 
-* Handle Mouse Scroll Auto Page
-
-* Commands
-** +Open File+
-** +Close File+
-** +Quit Application+
-
-* Section font
-* Show current section
-* Settings
-* Config
-* Fit to width, height
+* DONE
+** +Mouse Scroll Page Turn+
+** +StatusBar+
+*** Page Count
+*** Page Number
+*** PDF File Name
+** +CommandBar+
+** +Dark Mode+
+** +Commands+
+*** +Open File+
+*** +Close File+
+*** +Quit Application+
