@@ -8,8 +8,15 @@ A minimalistic PDF Viewer written in C++ using `Qt` and `Poppler` that uses `VIM
 # Dependencies
 	
 1. Qt6
-2. Poppler
+2. Poppler-Qt6
 3. Linux :)
+
+### For anyone one ArchLinux
+	
+```
+sudo pacman -S qt6-base poppler-qt6
+
+```
 
 # Installation
 
