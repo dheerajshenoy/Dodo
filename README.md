@@ -20,7 +20,7 @@ make
 
 // make command, outputs a binary file to the bin directory, which can be opened.
 
-// sudo make install
+ sudo make install
 // command can be used to install the binary to /bin directory
 
 // TODO: creation of .desktop file
