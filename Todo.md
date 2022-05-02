@@ -7,12 +7,12 @@
 
 # DONE
 1. Statusbar
-   a. Page Count
-   b. Page Number
-   c. File Name
+		a. Page Count
+		b. Page Number
+		c. File Name
 2. Dark Mode
 3. Command Handling
-   a. Open file
-   b. Close file
-   c. Quit Application
+		a. Open file
+		b. Close file
+		c. Quit Application
 4. Page Nav on Mouse Scroll
