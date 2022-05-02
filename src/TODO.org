@@ -1,0 +1,16 @@
+* +Mouse Scroll Page Turn+
+* +StatusBar+
+* +Dark Mode+
+
+* Handle Mouse Scroll Auto Page
+
+* Commands
+** +Open File+
+** +Close File+
+** +Quit Application+
+
+* Section font
+* Show current section
+* Settings
+* Config
+* Fit to width, height
