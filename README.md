@@ -30,6 +30,7 @@ make
 
 1. PDF Viewing (*obviously*)
 2. Unobtrusive UI
+3. Check out the [TODO](Todo.md) Sections for the other features
 
 # Preview
 
