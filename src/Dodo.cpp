@@ -65,16 +65,17 @@ void Dodo::Init()
 void Dodo::OpenFile(QString fileName)
 {
     // TODO CHECK FILE
-    QFile f(fileName);
-    if(!f.exists())
+    //fileName = fileName.replace("~", $HOME);
+    QString file = fileName.replace("~", $HOME);
+
+    if(!QFile::exists(file))
     {
         m_messageBar->showMessage("Unable to find the file");
         return;
     }
 
     m_docNameLabel->setText(fileName.replace($HOME, "~"));
-    fileName = fileName.replace("~", $HOME);
-    m_doc = Poppler::Document::load(fileName);
+    m_doc = Poppler::Document::load(file);
 
     emit documentChanged(m_doc.get());
     processOutline();

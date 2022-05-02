@@ -3,12 +3,19 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = Dodo
+
+TARGET = bin/Dodo
+
 INCLUDEPATH += .
+
 QT += gui core widgets
+
 LIBS += -l poppler-qt6
+
 OBJECTS_DIR = tmp
+
 MOC_DIR = moc
+
 HEADERS += src/CommandBar.hpp \
            src/Dodo.hpp \
            src/StatusBar.hpp \

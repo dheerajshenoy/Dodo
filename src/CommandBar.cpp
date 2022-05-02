@@ -80,8 +80,6 @@ void CommandBar::multiPart(QStringList cmd)
 {
     QString operation = cmd.at(0);
 
-    qDebug() << operation;
-
     if (operation == "o")
     {
         dodo->OpenFile(cmd.at(1));
