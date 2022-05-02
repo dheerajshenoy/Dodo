@@ -17,7 +17,13 @@ A minimalistic PDF Viewer written in C++ using `Qt` and `Poppler` that uses `VIM
 git clone https://github.com/dheerajshenoy/Dodo.git
 cd Dodo
 make
-<!-- hello world -->
+
+// make command, outputs a binary file to the bin directory, which can be opened.
+
+// sudo make install
+// command can be used to install the binary to /bin directory
+
+// TODO: creation of .desktop file
 ```
 
 # Features
@@ -27,3 +33,4 @@ make
 
 # Preview
 
+**WORK IN PROGRESS**
