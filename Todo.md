@@ -14,6 +14,6 @@
 5. ~~CommandBar~~
 6. ~~Dark Mode~~
 7. ~~Commands~~
-	a. ~~Open File~~
-	b. ~~Close File~~
-	c. ~~Quit Application~~
+	 a. ~~Open File~~
+   b. ~~Close File~~
+   c. ~~Quit Application~~
