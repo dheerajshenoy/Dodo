@@ -1,11 +1,11 @@
-* TODO
+* //TODO//
 ** Sectionwise font
 ** Show current section in the outline menu
 ** Config
 ** Fit page to width, height
 ** Custom background page rendering
 
-* DONE
+* //DONE//
 ** +Mouse Scroll Page Turn+
 ** +StatusBar+
 *** Page Count
