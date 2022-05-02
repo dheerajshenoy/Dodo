@@ -1,20 +1,18 @@
-* TODO
-1. Sectionwise font
-2. Show current section in the outline menu
-3. Config
+# TODO
+1. Font variety
+2. Show current reading section in the outline menu
+3. Handle Config
 4. Fit page to width, height
-5. Custom background page rendering
+5. Custom background for page 
 
-* DONE
-1. ~~StatusBar~~
-2. ~~Page Count~~
-3. ~~Page Number~~
-4. ~~PDF File Name~~
-5. ~~CommandBar~~
-6. ~~Dark Mode~~
-7. ~~Commands~~
-	 a. ~~Open File~~
-   b. ~~Close File~~
-   c. ~~Quit Application~~
-
-* Mouse Scroll Page Turn
+# DONE
+1. Statusbar
+   a. Page Count
+   b. Page Number
+   c. File Name
+2. Dark Mode
+3. Command Handling
+   a. Open file
+   b. Close file
+   c. Quit Application
+4. Page Nav on Mouse Scroll
