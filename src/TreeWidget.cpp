@@ -45,9 +45,6 @@ bool TreeWidget::eventFilter(QObject *obj, QEvent *e)
                 expandItem(currentItem());
                 break;
 
-            case Qt::Key_Tab:
-                expandCurrent();
-                break;
         }
     }
     return false;

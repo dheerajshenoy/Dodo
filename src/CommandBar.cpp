@@ -6,6 +6,7 @@ CommandBar::CommandBar(QWidget *parent)
     : QWidget(parent)
 {
     m_layout->addWidget(m_lineEdit);
+    m_layout->setContentsMargins(0, 0, 0, 0);
     this->setLayout(m_layout);
 
     connect(m_lineEdit, &QLineEdit::returnPressed, this, [this](){
@@ -25,7 +26,7 @@ inline void CommandBar::addWidget(QWidget *widget, int stretch, Qt::AlignmentFla
     m_layout->addWidget(widget, stretch, align);
 }
 
-QLineEdit* CommandBar::lineEdit()
+LineEdit* CommandBar::lineEdit()
 {
     return m_lineEdit;
 }
@@ -89,3 +90,4 @@ void CommandBar::multiPart(QStringList cmd)
         qDebug() << "WRITE";
     }
 }
+

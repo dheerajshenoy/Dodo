@@ -20,4 +20,6 @@ public:
 
 private:
     QHBoxLayout *m_layout = new QHBoxLayout();
+
+    unsigned int m_statusBarHeight = 25;
 };

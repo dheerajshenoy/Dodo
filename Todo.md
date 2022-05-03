@@ -4,6 +4,9 @@
 3. Handle Config
 4. Fit page to width, height
 5. Custom background for page 
+6. Search
+7. Text Selection
+8. Link Clicking
 
 # DONE
 1. Statusbar

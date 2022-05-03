@@ -19,7 +19,6 @@ public:
 private:
     TreeWidget *m_treeWidget;
     QVBoxLayout *m_layout = new QVBoxLayout();
-
 };
 
 #include "TreeWidget.hpp"

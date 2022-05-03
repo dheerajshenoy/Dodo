@@ -4,6 +4,8 @@
 #include <qt6/QtWidgets/QLineEdit>
 #include <qt6/QtWidgets/QWidget>
 
+#include "LineEdit.hpp"
+
 class CommandBar : public QWidget
 {
 
@@ -11,7 +13,7 @@ public:
     CommandBar(QWidget *parent = nullptr);
     ~CommandBar();
 
-    QLineEdit* lineEdit();
+    LineEdit* lineEdit();
     void addWidget(QWidget *widget, int stretch = 0, Qt::AlignmentFlag align = Qt::AlignLeft);
     void handleCommand();
     void singlePart(QString);
@@ -20,6 +22,6 @@ public:
 
 private:
     QHBoxLayout *m_layout = new QHBoxLayout();
-    QLineEdit *m_lineEdit = new QLineEdit();
+    LineEdit *m_lineEdit = new LineEdit();
 
 };

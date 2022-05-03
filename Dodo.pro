@@ -21,7 +21,8 @@ HEADERS += src/CommandBar.hpp \
            src/StatusBar.hpp \
            src/TOC.hpp \
            src/TreeWidget.hpp \
-           src/MessageBar.hpp
+           src/MessageBar.hpp \
+           src/LineEdit.hpp
 
 SOURCES += src/CommandBar.cpp \
            src/Dodo.cpp \
@@ -29,4 +30,5 @@ SOURCES += src/CommandBar.cpp \
            src/StatusBar.cpp \
            src/TOC.cpp \
            src/TreeWidget.cpp \
-           src/MessageBar.cpp
+           src/MessageBar.cpp \
+           src/LineEdit.cpp

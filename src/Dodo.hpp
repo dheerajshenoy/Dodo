@@ -16,10 +16,13 @@
 
 #include <qt6/QtCore/QEvent>
 #include <qt6/QtCore/QFile>
+#include <qt6/QtGui/QPainter>
 
 #include <qt6/QtGui/QKeyEvent>
 #include <qt6/QtGui/QShortcut>
 #include <qt6/QtGui/QKeySequence>
+#include <qt6/QtGui/QGenericMatrix>
+#include <qt6/QtGui/QTransform>
 
 #include <poppler/qt6/poppler-qt6.h>
 
@@ -82,8 +85,8 @@ public:
     void processOutline();
     void invertToColor();
     void toggleRecolor();
+    void getLinks();
 
-    
     friend class StatusBar;
     friend class CommandBar;
     friend class TreeWidget;
@@ -108,6 +111,7 @@ private:
     QWidget *m_scrollWidget = new QWidget();
     QVBoxLayout *m_scrollWidgetLayout = new QVBoxLayout();
 
+    QImage m_currentImage;
     std::unique_ptr<Poppler::Document> m_doc;
     std::unique_ptr<Poppler::Page> m_page;
     

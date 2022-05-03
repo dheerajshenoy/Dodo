@@ -4,6 +4,8 @@ StatusBar::StatusBar(QWidget *parent)
     : QWidget(parent)
 {
     this->setLayout(m_layout);
+    m_layout->setContentsMargins(0, 0, 0, 0);
+    this->setFixedHeight(m_statusBarHeight);
 }
 
 StatusBar::~StatusBar()

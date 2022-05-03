@@ -12,6 +12,7 @@ Dodo::Dodo(int argc, char **argv)
 {
     $HOME = getenv("HOME");
     
+    m_layout->setSpacing(0);
     m_widget->setLayout(m_layout);
     m_layout->addWidget(m_stackedWidget);
     m_stackedWidget->addWidget(m_mainWidget);
@@ -90,23 +91,14 @@ void Dodo::OpenFile(QString fileName)
 void Dodo::InitStatusBar()
 {
     m_statusBar = new StatusBar();
-    QFont font;
-    font.setFamily("Rajdhani Semibold");
-    font.setPixelSize(14);
-    m_statusBar->setFont(font);
 
     m_statusBar->Layout()->setContentsMargins(0, 0, 0, 0);
-
-    m_statusBar->addWidget(m_docNameLabel, Qt::AlignVCenter);
-
-    m_statusBar->Layout()->addStretch(100);
-
-    m_statusBar->addWidget(m_pageNumberLabel);
-
     m_statusBar->Layout()->addStretch(1);
-
+    m_statusBar->addWidget(m_docNameLabel, Qt::AlignVCenter);
+    m_statusBar->Layout()->addStretch(100);
+    m_statusBar->addWidget(m_pageNumberLabel);
+    m_statusBar->Layout()->addStretch(1);
     m_layout->addWidget(m_statusBar);
-
     currentPageChanged();
 }
 
@@ -159,7 +151,7 @@ void Dodo::handleKeys()
     QShortcut *command = new QShortcut(QKeySequence(":"), this);
     QShortcut *gotoBeg = new QShortcut(QKeySequence("g,g"), this);
     QShortcut *gotoEnd = new QShortcut(QKeySequence("Shift+G"), this);
-    QShortcut *togTOC = new QShortcut(QKeySequence("o"), this);
+    QShortcut *togTOC = new QShortcut(QKeySequence("Tab"), this);
     QShortcut *darkMode = new QShortcut(QKeySequence("i"), this);
     QShortcut *invert = new QShortcut(QKeySequence("q"), this);
 
@@ -200,28 +192,29 @@ void Dodo::setCurrentPage(int page)
 void Dodo::renderPage(int page)
 {
     m_page = m_doc->page(page);
-    QImage image = m_page->renderToImage(m_DPI, m_DPI);
+    m_currentImage = m_page->renderToImage(m_DPI, m_DPI);
     if(m_recolor)
     {
-        image.invertPixels(QImage::InvertRgb);
-        for(unsigned int x=0; x < image.width(); x++)
-            for(unsigned int y=0; y < image.height(); y++)
+        m_currentImage.invertPixels(QImage::InvertRgb);
+        for(unsigned int x=0; x < m_currentImage.width(); x++)
+            for(unsigned int y=0; y < m_currentImage.height(); y++)
             {
-                tmpColor = image.pixelColor(x, y);
+                tmpColor = m_currentImage.pixelColor(x, y);
                 if(tmpColor == QColor::fromRgb(0, 0, 0))
                     tmpColor.setNamedColor("#370053");
                 else if(tmpColor == QColor::fromRgb(255, 255, 255))
                     tmpColor.setNamedColor("#FFFFFF");
 
-                image.setPixelColor(x, y, tmpColor);
+                m_currentImage.setPixelColor(x, y, tmpColor);
             }
     }
     else
     {
         if(m_darkMode)
-            image.invertPixels(QImage::InvertRgb);
+            m_currentImage.invertPixels(QImage::InvertRgb);
     }
-    m_img->setPixmap(QPixmap::fromImage(image));
+    m_img->setPixmap(QPixmap::fromImage(m_currentImage));
+    getLinks();
 }
 
 bool Dodo::nextPage()
@@ -466,4 +459,16 @@ void Dodo::invertToColor()
 void Dodo::toggleRecolor()
 {
     m_recolor = !m_recolor;
+}
+
+void Dodo::getLinks()
+{
+
+    std::vector<std::unique_ptr<Poppler::Link>> links = m_page->links();
+
+    for (auto &i : links)
+    {
+        //qDebug() << i.get()->linkArea();
+        QRectF hlRect = i.get()->linkArea();
+    }
 }
