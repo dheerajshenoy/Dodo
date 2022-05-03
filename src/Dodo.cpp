@@ -4,6 +4,7 @@ Dodo *dodo = nullptr;
 #include "TOC.hpp"
 #include "StatusBar.hpp"
 #include "CommandBar.hpp"
+#include <vector>
 
 int Dodo::m_pageNumber = 0;
 
@@ -11,7 +12,6 @@ Dodo::Dodo(int argc, char **argv)
     :m_argc(std::move(argc)), m_argv(std::move(argv))
 {
     $HOME = getenv("HOME");
-    
     m_layout->setSpacing(0);
     m_widget->setLayout(m_layout);
     m_layout->addWidget(m_stackedWidget);
@@ -453,8 +453,7 @@ void Dodo::CloseFile()
 }
 
 void Dodo::invertToColor()
-{
-}
+{}
 
 void Dodo::toggleRecolor()
 {
@@ -463,12 +462,5 @@ void Dodo::toggleRecolor()
 
 void Dodo::getLinks()
 {
-
-    std::vector<std::unique_ptr<Poppler::Link>> links = m_page->links();
-
-    for (auto &i : links)
-    {
-        //qDebug() << i.get()->linkArea();
-        QRectF hlRect = i.get()->linkArea();
-    }
+    m_pageNumberLabel->setText("Dodo");
 }

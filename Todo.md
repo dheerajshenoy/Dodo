@@ -7,6 +7,7 @@
 6. Search
 7. Text Selection
 8. Link Clicking
+9. Handle key in TOC correctly
 
 # DONE
 1. Statusbar
