@@ -65,6 +65,7 @@ void Dodo::Init()
 
 void Dodo::OpenFile(QString fileName)
 {
+    qDebug() << "DD";
     // TODO CHECK FILE
     //fileName = fileName.replace("~", $HOME);
     QString file = fileName.replace("~", $HOME);
@@ -99,7 +100,7 @@ void Dodo::InitStatusBar()
     m_statusBar->addWidget(m_pageNumberLabel);
     m_statusBar->Layout()->addStretch(1);
     m_layout->addWidget(m_statusBar);
-    currentPageChanged();
+    //currentPageChanged();
 }
 
 void Dodo::handleDocumentChanged(Poppler::Document *doc)
@@ -446,8 +447,7 @@ bool Dodo::isPageValid(int page)
 
 void Dodo::CloseFile()
 {
-    delete m_img;
-    m_img = nullptr;
+    m_img->clear();
     m_pageNumberLabel->setText("");
     m_docNameLabel->setText("");
 }
