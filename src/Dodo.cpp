@@ -4,7 +4,6 @@ Dodo *dodo = nullptr;
 #include "TOC.hpp"
 #include "StatusBar.hpp"
 #include "CommandBar.hpp"
-#include <vector>
 
 int Dodo::m_pageNumber = 0;
 
@@ -34,6 +33,7 @@ Dodo::Dodo(int argc, char **argv)
     pageSettings();
     Init();
     toggleVHScrollBars();
+    ZoomReset();
 }
 
 Dodo::~Dodo()
@@ -47,7 +47,7 @@ void Dodo::pageSettings()
 
 void Dodo::Init()
 {
-    connect(m_VScrollBar, &QAbstractSlider::sliderMoved, this, &Dodo::handleVscroll);
+    connect(m_VScrollBar, &QAbstractSlider::valueChanged, this, &Dodo::handleVscroll);
     connect(this, SIGNAL( currentPageChanged(int) ), this, SLOT( pageChanged(int) ));
     connect(this, SIGNAL( documentChanged(Poppler::Document*) ), this,
             SLOT( handleDocumentChanged(Poppler::Document*) ));
@@ -66,8 +66,6 @@ void Dodo::Init()
 void Dodo::OpenFile(QString fileName)
 {
     qDebug() << "DD";
-    // TODO CHECK FILE
-    //fileName = fileName.replace("~", $HOME);
     QString file = fileName.replace("~", $HOME);
 
     if(!QFile::exists(file))
@@ -118,8 +116,8 @@ void Dodo::InitCommandBar()
 
 void Dodo::ZoomReset()
 {
-    m_zoomFactor = 1.0;
-    scaleImage(1);
+    m_zoomFactor = 1;
+    scaleImage(0.35);
 }
 
 void Dodo::ZoomIn()
@@ -251,7 +249,7 @@ void Dodo::Scroll(Direction direction)
             {
                 if(prevPage())
                 {
-                    m_VScrollBar->setValue(m_VScrollBar->maximum());
+                    pageScrollBottom();
                     renderPage();
                 }
             }
@@ -265,7 +263,7 @@ void Dodo::Scroll(Direction direction)
             {
                 if(nextPage())
                 {
-                    m_VScrollBar->setValue(m_VScrollBar->minimum());
+                    pageScrollTop();
                     renderPage();
                 }
             }
@@ -340,14 +338,14 @@ void Dodo::toggleVHScrollBars()
 
 void Dodo::begOfDocument()
 {
-    m_VScrollBar->setValue(0);
+    pageScrollTop();
     setCurrentPage(0);
     renderPage();
 }
 
 void Dodo::endOfDocument()
 {
-    m_VScrollBar->setValue(0);
+    pageScrollTop();
     setCurrentPage(m_pCount - 1);
     renderPage();
 }
@@ -461,6 +459,14 @@ void Dodo::toggleRecolor()
 }
 
 void Dodo::getLinks()
+{}
+
+void Dodo::pageScrollTop()
 {
-    m_pageNumberLabel->setText("Dodo");
+    m_VScrollBar->setValue(0);
+}
+
+void Dodo::pageScrollBottom()
+{
+    m_VScrollBar->setValue(m_VScrollBar->maximum());
 }
