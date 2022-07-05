@@ -19,6 +19,4 @@ public:
     bool eventFilter(QObject *obj, QEvent *e);
     void handleDoubleClick(QTreeWidgetItem *item, int column);
     int calculateRow(const QModelIndex & index);
-
-
 };

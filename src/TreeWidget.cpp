@@ -75,6 +75,7 @@ void TreeWidget::expandCurrent()
 
 void TreeWidget::handleDoubleClick(QTreeWidgetItem *item, int column)
 {
+    dodo->toggleTOC();
     int page = item->text(1).toInt();
     dodo->setCurrentPage(page - 1);
     dodo->pageScrollTop();

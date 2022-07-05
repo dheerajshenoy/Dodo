@@ -39,7 +39,9 @@ enum Direction
     Left,
     Right,
     Up,
-    Down
+    Down,
+    UpHalf,
+    DownHalf
 };
 
 class Dodo : public QMainWindow
@@ -141,7 +143,8 @@ private:
 
     bool m_scrollBarsShown = true,
         m_darkMode = false,
-        m_recolor = false;
+        m_recolor = false,
+        m_tocToggled = false;
 
     QVector<Poppler::OutlineItem> m_outlines;
     unsigned int m_outlineSize;

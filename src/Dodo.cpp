@@ -53,9 +53,7 @@ void Dodo::Init()
             SLOT( handleDocumentChanged(Poppler::Document*) ));
 
     handleKeys();
-    InitTOC();
-    InitStatusBar();
-    InitCommandBar();
+    InitTOC(); InitStatusBar(); InitCommandBar();
     if(m_argc > 1)
     {
         for(unsigned int i=1; i < m_argc; i++)
@@ -143,6 +141,8 @@ void Dodo::handleKeys()
     QShortcut *zoomOut = new QShortcut(QKeySequence("-"), this);
     QShortcut *scrollUp = new QShortcut(QKeySequence("k"), this);
     QShortcut *scrollDown = new QShortcut(QKeySequence("j"), this);
+    QShortcut *scrollDownHalf = new QShortcut(QKeySequence("Ctrl+d"), this);
+    QShortcut *scrollUpHalf = new QShortcut(QKeySequence("Ctrl+u"), this);
     QShortcut *scrollLeft = new QShortcut(QKeySequence("h"), this);
     QShortcut *scrollRight = new QShortcut(QKeySequence("l"), this);
     QShortcut *toggleScrollBars = new QShortcut(QKeySequence("s"), this);
@@ -160,6 +160,8 @@ void Dodo::handleKeys()
     connect(zoomOut, &QShortcut::activated, this, &Dodo::ZoomOut);
     connect(scrollUp, &QShortcut::activated, this, [this](){ Dodo::Scroll(Up); });
     connect(scrollDown, &QShortcut::activated, this, [this](){ Dodo::Scroll(Down); });
+    connect(scrollUpHalf, &QShortcut::activated, this, [this](){ Dodo::Scroll(UpHalf); });
+    connect(scrollDownHalf, &QShortcut::activated, this, [this](){ Dodo::Scroll(DownHalf); });
     connect(scrollLeft, &QShortcut::activated, this, [this](){ Dodo::Scroll(Left); });
     connect(scrollRight, &QShortcut::activated, this, [this](){ Dodo::Scroll(Right); });
     connect(toggleScrollBars, &QShortcut::activated, this, &Dodo::toggleVHScrollBars);
@@ -240,6 +242,8 @@ bool Dodo::prevPage()
 
 void Dodo::Scroll(Direction direction)
 {
+    if (m_tocToggled) return;
+
     switch(direction)
     {
         case Up:
@@ -355,12 +359,12 @@ void Dodo::toggleTOC()
     if(m_stackedWidget->currentWidget() == m_mainWidget)
     {
         m_stackedWidget->setCurrentWidget(m_tocWidget);
-        m_tocWidget->treeWidget()->setFocus();
+        m_tocToggled = true;
     }
     else
     {
         m_stackedWidget->setCurrentWidget(m_mainWidget);
-        m_tocWidget->treeWidget()->clearFocus();
+        m_tocToggled = false;
     }
 }
 
