@@ -86,6 +86,8 @@ public:
     void invertToColor();
     void toggleRecolor();
     void getLinks();
+    void pageScrollTop();
+    void pageScrollBottom();
 
     friend class StatusBar;
     friend class CommandBar;
