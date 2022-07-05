@@ -7,6 +7,8 @@
 8. Link Clicking
 9. Handle key in TOC correctly
 10. Mouse scrolling
+11. Load pages in-advance for faster page loading
+12. 
 
 # DONE
 1. Statusbar
