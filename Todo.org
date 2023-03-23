@@ -1,0 +1,26 @@
+* Features
+- [ ] Show current reading section in the outline menu
+- [ ] Fit page to width, height
+- [ ] Search the Whole DocumentS
+- [ ] Text Selection
+- [ ] Link Clicking
+- [ ] Handle key in TOC correctly
+- [ ] Mouse scrolling
+- [ ] Load pages in-advance for faster page loading
+- [ ] Jump to search entities
+- [X] Statusbar
+- [X] Page Count
+- [X] Page Number
+- [X] File Name
+- [X] Dark Mode
+- [X] Command Handling
+- [X] Open file
+- [X] Close file
+- [X] Quit Application
+- [X] Page Nav on Mouse Scroll
+- [X] Custom background for page
+- [X] Search Single Page
+- [X] Open File by Dialog
+- [X] Vim Like Keybindings
+- [X] Goto first instance of word/sentence
+* Bugs
