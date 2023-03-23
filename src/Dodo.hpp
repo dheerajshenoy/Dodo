@@ -11,6 +11,7 @@
 #include <qt6/QtWidgets/QVBoxLayout>
 #include <qt6/QtWidgets/QHBoxLayout>
 #include <qt6/QtWidgets/QLineEdit>
+#include <qt6/QtWidgets/QFileDialog>
 #include <qt6/QtWidgets/QTreeWidget>
 #include <qt6/QtWidgets/QTreeWidgetItem>
 
@@ -54,6 +55,7 @@ public:
 
     void Init();
     void OpenFile(QString fileName);
+	void OpenFileDialog();
     void CloseFile();
     inline void ZoomReset();
     inline void ZoomIn();
@@ -67,6 +69,7 @@ public:
     bool prevPage();
     inline int getCurrentPage() const { return m_pageNumber; }
     void setCurrentPage(int page);
+	void gotoPage(int page);
     bool isPageValid(int page);
     void Scroll(Direction direction);
     void FitToHeight();

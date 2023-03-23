@@ -66,6 +66,8 @@ void CommandBar::singlePart(QString cmd)
     {
         if (cmd == "outline")
             dodo->toggleTOC();
+		else if (cmd == "open")
+			dodo->OpenFileDialog();
         else if (cmd == "close" || cmd == "c")
             dodo->CloseFile();
         else if (cmd == "quit" || cmd == "q")
@@ -91,5 +93,10 @@ void CommandBar::multiPart(QStringList cmd)
 	else if (operation == "searchpage")
 	{
 		dodo->searchPage(cmd.at(1));
+	}
+
+	else if (operation == "search")
+	{
+		dodo->searchDocument(cmd.at(1));
 	}
 }

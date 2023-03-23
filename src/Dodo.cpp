@@ -87,9 +87,35 @@ void Dodo::OpenFile(QString fileName)
     m_docNameLabel->setText(fileName.replace($HOME, "~"));
     processOutline();
     m_pCount = m_doc->numPages();
-    setCurrentPage(0);
     m_page = m_doc->page(m_pageNumber);
-    renderPage();
+	gotoPage(0);
+    ZoomReset();
+}
+
+void Dodo::OpenFileDialog()
+{
+    QString filename = QFileDialog::getOpenFileName();
+
+    if(!QFile::exists(filename))
+    {
+        m_messageBar->showMessage("Unable to find the file");
+        return;
+    }
+
+    m_doc = Poppler::Document::load(filename);
+    if(!m_doc)
+    {
+        m_messageBar->showMessage("Unable to load the file");
+        return;
+    }
+    m_doc->setRenderHint(Poppler::Document::TextAntialiasing);
+    m_doc->setRenderHint(Poppler::Document::Antialiasing);
+    emit(documentChanged(m_doc.get()));
+    m_docNameLabel->setText(filename.replace($HOME, "~"));
+    processOutline();
+    m_pCount = m_doc->numPages();
+    m_page = m_doc->page(m_pageNumber);
+	gotoPage(0);
     ZoomReset();
 }
 
@@ -190,6 +216,12 @@ void Dodo::handleKeys()
     connect(k_fit_to_width, &QShortcut::activated, this, &Dodo::FitToWidth);
     connect(k_escape, &QShortcut::activated, this, &Dodo::Escape);
 
+}
+
+void Dodo::gotoPage(int page)
+{
+	setCurrentPage(page);
+	renderPage();
 }
 
 void Dodo::setCurrentPage(int page)
@@ -349,15 +381,13 @@ void Dodo::toggleVHScrollBars()
 void Dodo::begOfDocument()
 {
     pageScrollTop();
-    setCurrentPage(0);
-    renderPage();
+	gotoPage(0);
 }
 
 void Dodo::endOfDocument()
 {
     pageScrollTop();
-    setCurrentPage(m_pCount - 1);
-    renderPage();
+	gotoPage(m_pCount - 1);
 }
 
 void Dodo::toggleTOC()
@@ -503,6 +533,17 @@ void Dodo::searchPage(const QString str, const int p)
 
 void Dodo::searchDocument(QString str)
 {
+	QList<QRectF> highlightRect;
+	for(int i=0; i < m_pCount; i++)
+	{
+		auto page = m_doc->page(i);
+		highlightRect = page->search(str);
+		if(highlightRect.size() > 0)
+		{
+			gotoPage(i);
+			break;
+		}
+	}
 }
 
 void Dodo::Escape()
