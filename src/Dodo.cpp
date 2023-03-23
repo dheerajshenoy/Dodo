@@ -1,4 +1,5 @@
 #include "Dodo.hpp"
+#include "qnamespace.h"
 #include <memory>
 #include <poppler/qt6/poppler-link.h>
 #include <qt6/QtGui/qshortcut.h>
@@ -291,8 +292,8 @@ void Dodo::Scroll(Direction direction)
 
 void Dodo::FitToWidth()
 {
-    m_img->setFixedWidth(this->width());
-    renderPage();
+    //m_img->setFixedSize(m_zoomFactor);
+    //renderPage();
 }
 
 void Dodo::FitToHeight()
