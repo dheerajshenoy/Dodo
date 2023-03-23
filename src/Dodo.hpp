@@ -24,6 +24,7 @@
 #include <qt6/QtGui/QGenericMatrix>
 #include <qt6/QtGui/QTransform>
 
+
 #include <poppler/qt6/poppler-qt6.h>
 
 #include "MessageBar.hpp"
@@ -46,7 +47,7 @@ class Dodo : public QMainWindow
 {
 
     Q_OBJECT
-    
+
 public:
     Dodo(int argc, char **argv);
     ~Dodo();
@@ -88,11 +89,14 @@ public:
     void getLinks();
     void pageScrollTop();
     void pageScrollBottom();
+	void searchPage(const QString str, const int page = m_pageNumber);
+    void searchDocument(QString str);
+	void Escape();
 
     friend class StatusBar;
     friend class CommandBar;
     friend class TreeWidget;
-    
+
 signals:
     void currentPageChanged(int page = Dodo::m_pageNumber);
     void documentChanged(Poppler::Document *doc);
@@ -101,7 +105,7 @@ signals:
 private slots:
     void pageChanged(int page);
     void handleDocumentChanged(Poppler::Document *doc);
-    
+
 private:
 
     QVBoxLayout *m_layout = new QVBoxLayout();
@@ -112,15 +116,17 @@ private:
     QScrollArea *m_scrollArea = new QScrollArea();
     QWidget *m_scrollWidget = new QWidget();
     QVBoxLayout *m_scrollWidgetLayout = new QVBoxLayout();
+	QSize m_imageScale;
 
     QImage m_currentImage;
     std::unique_ptr<Poppler::Document> m_doc;
     std::unique_ptr<Poppler::Page> m_page;
-    
+
     QLabel *m_img = new QLabel();
     QLabel *m_pageNumberLabel = new QLabel(),
         *m_docNameLabel = new QLabel(),
-        *m_pageCountLabel = new QLabel();
+        *m_pageCountLabel = new QLabel(),
+        *m_pageCountDividerLabel = new QLabel("/");
 
     double m_res = 4.0, m_zoomFactor = 1.0;
     int m_pCount = -1,
@@ -141,7 +147,8 @@ private:
 
     bool m_scrollBarsShown = true,
         m_darkMode = false,
-        m_recolor = false;
+        m_recolor = false,
+		m_searchMode = false;
 
     QVector<Poppler::OutlineItem> m_outlines;
     unsigned int m_outlineSize;
@@ -151,6 +158,8 @@ private:
         m_unitFont = "Roboto Mono";
 
     QColor tmpColor;
+
+	QList<QList<QRectF>> m_searchResultList;
 };
 
 extern Dodo* dodo;

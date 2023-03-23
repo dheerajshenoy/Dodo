@@ -37,9 +37,6 @@ void CommandBar::handleCommand()
     QStringList cmd = text.at(0).split(" ");
     switch(cmd.size())
     {
-        case 0:
-            break;
-            
         case 1:
             singlePart(cmd.at(0));
             break;
@@ -52,7 +49,6 @@ void CommandBar::handleCommand()
             break;
     }
 }
-
 
 void CommandBar::singlePart(QString cmd)
 {
@@ -79,15 +75,21 @@ void CommandBar::singlePart(QString cmd)
 
 void CommandBar::multiPart(QStringList cmd)
 {
-    QString operation = cmd.at(0);
+    QString operation = cmd.at(0).toLower();
 
-    if (operation == "o")
+    if (operation == "o" or operation == "open")
     {
         dodo->OpenFile(cmd.at(1));
+        return;
     }
-    else if (operation == "w")
+    else if (operation == "w" or operation == "write")
     {
         qDebug() << "WRITE";
+        return;
     }
-}
 
+	else if (operation == "searchpage")
+	{
+		dodo->searchPage(cmd.at(1));
+	}
+}

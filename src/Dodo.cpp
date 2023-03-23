@@ -1,4 +1,7 @@
 #include "Dodo.hpp"
+#include <memory>
+#include <poppler/qt6/poppler-link.h>
+#include <qt6/QtGui/qshortcut.h>
 Dodo *dodo = nullptr;
 
 #include "TOC.hpp"
@@ -18,7 +21,6 @@ Dodo::Dodo(int argc, char **argv)
     m_mainWidget->setLayout(m_mainLayout);
 
     m_scrollArea->setFrameShape(QFrame::NoFrame);
-
     m_mainLayout->setContentsMargins(0, 0, 0, 0);
     m_scrollWidgetLayout->setContentsMargins(0, 0, 0, 0);
     m_layout->setContentsMargins(0, 0, 0, 0);
@@ -51,7 +53,6 @@ void Dodo::Init()
     connect(this, SIGNAL( currentPageChanged(int) ), this, SLOT( pageChanged(int) ));
     connect(this, SIGNAL( documentChanged(Poppler::Document*) ), this,
             SLOT( handleDocumentChanged(Poppler::Document*) ));
-
     handleKeys();
     InitTOC();
     InitStatusBar();
@@ -65,7 +66,6 @@ void Dodo::Init()
 
 void Dodo::OpenFile(QString fileName)
 {
-    qDebug() << "DD";
     QString file = fileName.replace("~", $HOME);
 
     if(!QFile::exists(file))
@@ -74,28 +74,34 @@ void Dodo::OpenFile(QString fileName)
         return;
     }
 
-    m_docNameLabel->setText(fileName.replace($HOME, "~"));
     m_doc = Poppler::Document::load(file);
-
-    emit documentChanged(m_doc.get());
-    processOutline();
+    if(!m_doc)
+    {
+        m_messageBar->showMessage("Unable to load the file");
+        return;
+    }
     m_doc->setRenderHint(Poppler::Document::TextAntialiasing);
     m_doc->setRenderHint(Poppler::Document::Antialiasing);
+    emit(documentChanged(m_doc.get()));
+    m_docNameLabel->setText(fileName.replace($HOME, "~"));
+    processOutline();
     m_pCount = m_doc->numPages();
     setCurrentPage(0);
     m_page = m_doc->page(m_pageNumber);
     renderPage();
+    ZoomReset();
 }
 
 void Dodo::InitStatusBar()
 {
     m_statusBar = new StatusBar();
-
     m_statusBar->Layout()->setContentsMargins(0, 0, 0, 0);
     m_statusBar->Layout()->addStretch(1);
     m_statusBar->addWidget(m_docNameLabel, Qt::AlignVCenter);
     m_statusBar->Layout()->addStretch(100);
     m_statusBar->addWidget(m_pageNumberLabel);
+    m_statusBar->addWidget(m_pageCountDividerLabel);
+    m_statusBar->addWidget(m_pageCountLabel);
     m_statusBar->Layout()->addStretch(1);
     m_layout->addWidget(m_statusBar);
     //currentPageChanged();
@@ -134,7 +140,8 @@ void Dodo::ZoomOut()
 void Dodo::scaleImage(double factor)
 {
     m_zoomFactor *= factor;
-    m_img->setFixedSize(m_zoomFactor * m_img->pixmap(Qt::ReturnByValue).size());
+	m_imageScale = m_zoomFactor * m_img->pixmap(Qt::ReturnByValue).size();
+    m_img->setFixedSize(m_imageScale);
 }
 
 void Dodo::handleKeys()
@@ -153,9 +160,10 @@ void Dodo::handleKeys()
     QShortcut *togTOC = new QShortcut(QKeySequence("Tab"), this);
     QShortcut *darkMode = new QShortcut(QKeySequence("i"), this);
     QShortcut *invert = new QShortcut(QKeySequence("q"), this);
+    QShortcut *k_fit_to_width = new QShortcut(QKeySequence("W"), this);
+	QShortcut *k_escape = new QShortcut(QKeySequence("Escape"), this);
 
     connect(invert, &QShortcut::activated, this, &Dodo::toggleRecolor);
-
     connect(zoomIn, &QShortcut::activated, this, &Dodo::ZoomIn);
     connect(zoomOut, &QShortcut::activated, this, &Dodo::ZoomOut);
     connect(scrollUp, &QShortcut::activated, this, [this](){ Dodo::Scroll(Up); });
@@ -169,15 +177,17 @@ void Dodo::handleKeys()
     connect(togTOC, &QShortcut::activated, this, &Dodo::toggleTOC);
     connect(darkMode, &QShortcut::activated, this, &Dodo::toggleDarkMode);
     connect(command, &QShortcut::activated, this, [this]() {
-        if(m_commandBar->isHidden())
-        {
-            m_commandBar->show();
-            m_commandBar->lineEdit()->setFocus();
-            m_commandBar->lineEdit()->setText(":");
-        }
-        else
-            m_commandBar->hide();
-    });
+            if(m_commandBar->isHidden())
+            {
+                m_commandBar->show();
+                m_commandBar->lineEdit()->setFocus();
+                m_commandBar->lineEdit()->setText(":");
+            }
+            else
+                m_commandBar->hide();
+            });
+    connect(k_fit_to_width, &QShortcut::activated, this, &Dodo::FitToWidth);
+    connect(k_escape, &QShortcut::activated, this, &Dodo::Escape);
 
 }
 
@@ -253,7 +263,6 @@ void Dodo::Scroll(Direction direction)
                     renderPage();
                 }
             }
-
             break;
 
         case Down:
@@ -375,25 +384,25 @@ void Dodo::processOutline()
     m_outlines = m_doc->outline();
 
     /*
-    qDebug() << "\n";
-    for(auto &i : m_outlines)
-    {
-        auto d = i.destination();
-        qDebug() << i.name() << " " << d.get()->pageNumber();
-        if(i.hasChildren())
-        {
-            qDebug() << "\n";
-            auto items = i.children();
-            for(auto &item : items)
-            {
-                auto e = item.destination();
-                qDebug() << item.name() << " " << e.get()->pageNumber();
+       qDebug() << "\n";
+       for(auto &i : m_outlines)
+       {
+       auto d = i.destination();
+       qDebug() << i.name() << " " << d.get()->pageNumber();
+       if(i.hasChildren())
+       {
+       qDebug() << "\n";
+       auto items = i.children();
+       for(auto &item : items)
+       {
+       auto e = item.destination();
+       qDebug() << item.name() << " " << e.get()->pageNumber();
 
-            }
-            qDebug() << "\n";
-        }
-    }
-    */
+       }
+       qDebug() << "\n";
+       }
+       }
+       */
 
     m_tocWidget->treeWidget()->clear();
     m_outlineSize = m_outlines.size();
@@ -469,4 +478,35 @@ void Dodo::pageScrollTop()
 void Dodo::pageScrollBottom()
 {
     m_VScrollBar->setValue(m_VScrollBar->maximum());
+}
+
+void Dodo::searchPage(const QString str, const int p)
+{
+	auto page= m_doc->page(p);
+	QList<QRectF> highlightRect = page->search(str);
+	QPainter qImagePaint(&m_currentImage);
+
+	qImagePaint.setBrush(Qt::NoBrush);
+	qImagePaint.setPen(Qt::red);
+
+	auto size = page->pageSize();
+
+	double scaleFactor = m_DPI / 72.0;
+
+	for(int i=0; i < highlightRect.size(); i++)
+		qImagePaint.drawRect(highlightRect[i].x() * scaleFactor, highlightRect[i].y() * scaleFactor, highlightRect[i].width() * scaleFactor, highlightRect[i].height() * scaleFactor);
+
+	qImagePaint.end();
+	m_img->setPixmap(QPixmap::fromImage(m_currentImage));
+}
+
+void Dodo::searchDocument(QString str)
+{
+}
+
+void Dodo::Escape()
+{
+	if(m_searchMode)
+		m_searchMode = false;
+	qDebug() << "DD";
 }

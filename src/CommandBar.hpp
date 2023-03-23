@@ -19,7 +19,6 @@ public:
     void singlePart(QString);
     void multiPart(QStringList);
 
-
 private:
     QHBoxLayout *m_layout = new QHBoxLayout();
     LineEdit *m_lineEdit = new LineEdit();
