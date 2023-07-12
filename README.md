@@ -50,6 +50,6 @@ you can `:open <path to the pdf file>`.
 
 # Preview
 
-1. [](Screenshots/pic1.png)
-2. [](Screenshots/pic2.png)
-3. [](Screenshots/pic3.png)
+1. ![](Screenshots/pic1.png)
+2. ![](Screenshots/pic2.png)
+3. ![](Screenshots/pic3.png)
