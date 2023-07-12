@@ -49,7 +49,6 @@ you can `:open <path to the pdf file>`.
 3. Check out the [TODO](Todo.md) Sections for the other features
 
 # Preview
-
-1. ![](Screenshots/pic1.png)
-2. ![](Screenshots/pic2.png)
-3. ![](Screenshots/pic3.png)
+![](Screenshots/pic1.png)
+![Table Of Contents Menu](Screenshots/pic2.png)
+![Dark Mode](Screenshots/pic3.png)
