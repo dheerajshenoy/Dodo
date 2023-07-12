@@ -42,4 +42,6 @@ make
 
 # Preview
 
-**WORK IN PROGRESS**
+[](Screenshots/pic1.png)
+[](Screenshots/pic2.png)
+[](Screenshots/pic3.png)
