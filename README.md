@@ -34,6 +34,14 @@ make
 // TODO: creation of .desktop file
 ```
 
+# Basic Usage
+
+1. To open a file, press `:` (colon) and type open and enter to get the file dialog to choose the pdf file. Alternatively, 
+you can `:open <path to the pdf file>`.
+2. Press `<TAB>` once in a pdf file to open table of contents of the pdf file if there is one shipped with the file.
+3. Zoom in and out with `+` and `-` key.
+4. Scroll up and down with j and k keys (vim like keybindings).
+
 # Features
 
 1. PDF Viewing (*obviously*)
