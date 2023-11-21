@@ -18,6 +18,18 @@ CommandBar::CommandBar(QWidget *parent)
 
 }
 
+void CommandBar::keyReleaseEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Escape)
+    {
+        lineEdit()->clearFocus();
+        lineEdit()->clear();
+        this->hide();
+    }
+
+    QWidget::keyPressEvent(event);
+}
+
 CommandBar::~CommandBar()
 {}
 
@@ -65,13 +77,21 @@ void CommandBar::singlePart(QString cmd)
     else
     {
         if (cmd == "outline")
+        {
             dodo->toggleTOC();
-		else if (cmd == "open")
-			dodo->OpenFileDialog();
+        }
+        else if (cmd == "open")
+        {
+            dodo->OpenFileDialog();
+        }
         else if (cmd == "close" || cmd == "c")
+        {
             dodo->CloseFile();
+        }
         else if (cmd == "quit" || cmd == "q")
+        {
             QApplication::quit();
+        }
     }
 }
 
@@ -90,13 +110,13 @@ void CommandBar::multiPart(QStringList cmd)
         return;
     }
 
-	else if (operation == "searchpage")
-	{
-		dodo->searchPage(cmd.at(1));
-	}
+    else if (operation == "searchpage")
+    {
+        dodo->searchPage(cmd.at(1));
+    }
 
-	else if (operation == "search")
-	{
-		dodo->searchDocument(cmd.at(1));
-	}
+    else if (operation == "search")
+    {
+        dodo->searchDocument(cmd.at(1));
+    }
 }

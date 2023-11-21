@@ -8,6 +8,7 @@
 * Mouse scrolling
 * Load pages in-advance for faster page loading
 * Jump to search entities
+* caching of page in advance for faster page loading - IN PROGRESS
 
 # DONE
 1. Statusbar
@@ -25,3 +26,4 @@
 7. Open File by Dialog
 8. Vim Like Keybindings
 9. Goto first instance of word/sentence
+10. Escape on command bar

@@ -1,19 +1,28 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Dodo.hpp'
 **
-** Created by: The Qt Meta Object Compiler version 68 (Qt 6.4.3)
+** Created by: The Qt Meta Object Compiler version 68 (Qt 6.6.0)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include <memory>
 #include "../src/Dodo.hpp"
 #include <QtGui/qtextcursor.h>
 #include <QtCore/qmetatype.h>
+
+#if __has_include(<QtCore/qtmochelpers.h>)
+#include <QtCore/qtmochelpers.h>
+#else
+QT_BEGIN_MOC_NAMESPACE
+#endif
+
+
+#include <memory>
+
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'Dodo.hpp' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 68
-#error "This file was generated using the moc from 6.4.3. It"
+#error "This file was generated using the moc from 6.6.0. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -22,11 +31,26 @@
 #define Q_CONSTINIT
 #endif
 
-QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
+QT_WARNING_DISABLE_GCC("-Wuseless-cast")
 namespace {
-struct qt_meta_stringdata_Dodo_t {
+
+#ifdef QT_MOC_HAS_STRINGDATA
+struct qt_meta_stringdata_CLASSDodoENDCLASS_t {};
+static constexpr auto qt_meta_stringdata_CLASSDodoENDCLASS = QtMocHelpers::stringData(
+    "Dodo",
+    "currentPageChanged",
+    "",
+    "page",
+    "documentChanged",
+    "Poppler::Document*",
+    "doc",
+    "pageChanged",
+    "handleDocumentChanged"
+);
+#else  // !QT_MOC_HAS_STRING_DATA
+struct qt_meta_stringdata_CLASSDodoENDCLASS_t {
     uint offsetsAndSizes[18];
     char stringdata0[5];
     char stringdata1[19];
@@ -39,8 +63,8 @@ struct qt_meta_stringdata_Dodo_t {
     char stringdata8[22];
 };
 #define QT_MOC_LITERAL(ofs, len) \
-    uint(sizeof(qt_meta_stringdata_Dodo_t::offsetsAndSizes) + ofs), len 
-Q_CONSTINIT static const qt_meta_stringdata_Dodo_t qt_meta_stringdata_Dodo = {
+    uint(sizeof(qt_meta_stringdata_CLASSDodoENDCLASS_t::offsetsAndSizes) + ofs), len 
+Q_CONSTINIT static const qt_meta_stringdata_CLASSDodoENDCLASS_t qt_meta_stringdata_CLASSDodoENDCLASS = {
     {
         QT_MOC_LITERAL(0, 4),  // "Dodo"
         QT_MOC_LITERAL(5, 18),  // "currentPageChanged"
@@ -63,12 +87,13 @@ Q_CONSTINIT static const qt_meta_stringdata_Dodo_t qt_meta_stringdata_Dodo = {
     "handleDocumentChanged"
 };
 #undef QT_MOC_LITERAL
+#endif // !QT_MOC_HAS_STRING_DATA
 } // unnamed namespace
 
-Q_CONSTINIT static const uint qt_meta_data_Dodo[] = {
+Q_CONSTINIT static const uint qt_meta_data_CLASSDodoENDCLASS[] = {
 
  // content:
-      10,       // revision
+      12,       // revision
        0,       // classname
        0,    0, // classinfo
        5,   14, // methods
@@ -101,11 +126,11 @@ Q_CONSTINIT static const uint qt_meta_data_Dodo[] = {
 
 Q_CONSTINIT const QMetaObject Dodo::staticMetaObject = { {
     QMetaObject::SuperData::link<QMainWindow::staticMetaObject>(),
-    qt_meta_stringdata_Dodo.offsetsAndSizes,
-    qt_meta_data_Dodo,
+    qt_meta_stringdata_CLASSDodoENDCLASS.offsetsAndSizes,
+    qt_meta_data_CLASSDodoENDCLASS,
     qt_static_metacall,
     nullptr,
-    qt_incomplete_metaTypeArray<qt_meta_stringdata_Dodo_t,
+    qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSDodoENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<Dodo, std::true_type>,
         // method 'currentPageChanged'
@@ -166,7 +191,7 @@ const QMetaObject *Dodo::metaObject() const
 void *Dodo::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_Dodo.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_CLASSDodoENDCLASS.stringdata0))
         return static_cast<void*>(this);
     return QMainWindow::qt_metacast(_clname);
 }
@@ -202,4 +227,3 @@ void Dodo::documentChanged(Poppler::Document * _t1)
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_WARNING_POP
-QT_END_MOC_NAMESPACE

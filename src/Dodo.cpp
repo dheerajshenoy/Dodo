@@ -1,4 +1,5 @@
 #include "Dodo.hpp"
+#include "qevent.h"
 #include "qnamespace.h"
 #include <memory>
 #include <poppler/qt6/poppler-link.h>
@@ -37,6 +38,7 @@ Dodo::Dodo(int argc, char **argv)
     Init();
     toggleVHScrollBars();
     ZoomReset();
+
 }
 
 Dodo::~Dodo()
@@ -60,7 +62,7 @@ void Dodo::Init()
     InitCommandBar();
     if(m_argc > 1)
     {
-        for(unsigned int i=1; i < m_argc; i++)
+        for(int i=1; i < m_argc; i++)
             OpenFile(m_argv[i]);
     }
 }
@@ -214,7 +216,7 @@ void Dodo::handleKeys()
                 m_commandBar->hide();
             });
     connect(k_fit_to_width, &QShortcut::activated, this, &Dodo::FitToWidth);
-    connect(k_escape, &QShortcut::activated, this, &Dodo::Escape);
+    // connect(k_escape, &QShortcut::activated, this, &Dodo::Escape);
 
 }
 
@@ -233,20 +235,25 @@ void Dodo::setCurrentPage(int page)
 
 void Dodo::renderPage(int page)
 {
+    if (isAlreadyCached(page))
+    {
+        m_img->setPixmap(m_img_map.value(page));
+        getLinks();
+        return;
+    }
     m_page = m_doc->page(page);
     m_currentImage = m_page->renderToImage(m_DPI, m_DPI);
     if(m_recolor)
     {
         m_currentImage.invertPixels(QImage::InvertRgb);
-        for(unsigned int x=0; x < m_currentImage.width(); x++)
-            for(unsigned int y=0; y < m_currentImage.height(); y++)
+        for(int x=0; x < m_currentImage.width(); x++)
+            for(int y=0; y < m_currentImage.height(); y++)
             {
                 tmpColor = m_currentImage.pixelColor(x, y);
                 if(tmpColor == QColor::fromRgb(0, 0, 0))
-                    tmpColor.setNamedColor("#370053");
+                    tmpColor.fromString("#370053");
                 else if(tmpColor == QColor::fromRgb(255, 255, 255))
-                    tmpColor.setNamedColor("#FFFFFF");
-
+                    tmpColor.fromString("#FFFFFF");
                 m_currentImage.setPixelColor(x, y, tmpColor);
             }
     }
@@ -259,12 +266,53 @@ void Dodo::renderPage(int page)
     getLinks();
 }
 
+void Dodo::cachePage(int page)
+{
+    if(isAlreadyCached(page))
+        return;
+    m_page = m_doc->page(page);
+    m_currentImage = m_page->renderToImage(m_DPI, m_DPI);
+    if(m_recolor)
+    {
+        m_currentImage.invertPixels(QImage::InvertRgb);
+        for(int x=0; x < m_currentImage.width(); x++)
+            for(int y=0; y < m_currentImage.height(); y++)
+            {
+                tmpColor = m_currentImage.pixelColor(x, y);
+                if(tmpColor == QColor::fromRgb(0, 0, 0))
+                    tmpColor.fromString("#370053");
+                else if(tmpColor == QColor::fromRgb(255, 255, 255))
+                    tmpColor.fromString("#FFFFFF");
+
+                m_currentImage.setPixelColor(x, y, tmpColor);
+            }
+    }
+    else
+    {
+        if(m_darkMode)
+            m_currentImage.invertPixels(QImage::InvertRgb);
+    }
+    m_img_map.insert(page, QPixmap::fromImage(m_currentImage));
+    getLinks();
+}
+
+inline bool Dodo::isAlreadyCached(int page)
+{
+    return m_img_map.contains(page);
+}
+
+void Dodo::removeCachedPage(int page)
+{
+    m_img_map.remove(page);
+}
+
 bool Dodo::nextPage()
 {
     if (m_pageNumber < m_pCount - 1)
     {
         setCurrentPage(getCurrentPage() + 1);
         emit currentPageChanged();
+        
         return true;
     }
     return false;
@@ -474,6 +522,7 @@ void Dodo::toggleDarkMode()
 
 void Dodo::handleVscroll(int value)
 {
+
 }
 
 bool Dodo::isPageValid(int page)
@@ -498,6 +547,7 @@ void Dodo::toggleRecolor()
     m_recolor = !m_recolor;
 }
 
+// TODO: Get all the link in the page
 void Dodo::getLinks()
 {}
 
@@ -520,7 +570,7 @@ void Dodo::searchPage(const QString str, const int p)
 	qImagePaint.setBrush(Qt::NoBrush);
 	qImagePaint.setPen(Qt::red);
 
-	auto size = page->pageSize();
+	// auto size = page->pageSize();
 
 	double scaleFactor = m_DPI / 72.0;
 

@@ -19,6 +19,8 @@ public:
     void singlePart(QString);
     void multiPart(QStringList);
 
+    void keyReleaseEvent(QKeyEvent*);
+
 private:
     QHBoxLayout *m_layout = new QHBoxLayout();
     LineEdit *m_lineEdit = new LineEdit();

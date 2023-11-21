@@ -64,6 +64,9 @@ public:
     void handleKeys();
     void pageSettings();
     void renderPage(int page = Dodo::m_pageNumber);
+    void cachePage(int page);
+    inline bool isAlreadyCached(int page);
+    void removeCachedPage(int page);
     void checkAndRenderPage(int page = Dodo::m_pageNumber);
     bool nextPage();
     bool prevPage();
@@ -126,6 +129,7 @@ private:
     std::unique_ptr<Poppler::Page> m_page;
 
     QLabel *m_img = new QLabel();
+    QMap<int, QPixmap> m_img_map;
     QLabel *m_pageNumberLabel = new QLabel(),
         *m_docNameLabel = new QLabel(),
         *m_pageCountLabel = new QLabel(),
