@@ -1,0 +1,6 @@
+tmp/
+bin/
+moc/
+.cache/
+compile_commands.json
+.qmake.stash

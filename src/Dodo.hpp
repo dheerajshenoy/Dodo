@@ -30,7 +30,6 @@
 
 #include "MessageBar.hpp"
 
-
 class CommandBar;
 class StatusBar;
 class TOC;

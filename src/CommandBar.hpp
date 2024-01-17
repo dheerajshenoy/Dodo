@@ -24,5 +24,4 @@ public:
 private:
     QHBoxLayout *m_layout = new QHBoxLayout();
     LineEdit *m_lineEdit = new LineEdit();
-
 };

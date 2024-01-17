@@ -1,4 +1,3 @@
-
 #include "CommandBar.hpp"
 #include "Dodo.hpp"
 
@@ -8,7 +7,6 @@ CommandBar::CommandBar(QWidget *parent)
     m_layout->addWidget(m_lineEdit);
     m_layout->setContentsMargins(0, 0, 0, 0);
     this->setLayout(m_layout);
-
     connect(m_lineEdit, &QLineEdit::returnPressed, this, [this](){
         handleCommand();
         m_lineEdit->clearFocus();
@@ -49,16 +47,16 @@ void CommandBar::handleCommand()
     QStringList cmd = text.at(0).split(" ");
     switch(cmd.size())
     {
-        case 1:
-            singlePart(cmd.at(0));
-            break;
+    case 1:
+        singlePart(cmd.at(0));
+        break;
 
-        case 2:
-            multiPart(cmd);
-            break;
+    case 2:
+        multiPart(cmd);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 }
 
@@ -119,4 +117,5 @@ void CommandBar::multiPart(QStringList cmd)
     {
         dodo->searchDocument(cmd.at(1));
     }
+
 }

@@ -38,7 +38,6 @@ Dodo::Dodo(int argc, char **argv)
     Init();
     toggleVHScrollBars();
     ZoomReset();
-
 }
 
 Dodo::~Dodo()
@@ -593,12 +592,13 @@ void Dodo::searchDocument(QString str)
 			gotoPage(i);
 			break;
 		}
-	}
+    }
 }
 
 void Dodo::Escape()
 {
 	if(m_searchMode)
 		m_searchMode = false;
-	qDebug() << "DD";
+    qDebug() << "DD";
 }
+
