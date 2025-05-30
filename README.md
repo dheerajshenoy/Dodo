@@ -13,10 +13,9 @@ everyday documents, this reader offers a streamlined interface and robust functi
 resource usage.
 
 > [!WARNING]
-> Dodo is currently in alpha and may experience crashes or instability.
-
-> [!NOTE]
-> dodo version is v0.2.1-alpha
+> This branch is no longer under active development and lacks several features available in
+> the main branch (tabs, sessions etc). Please use the main branch for the most up-to-date
+> and complete version.
 
 ## Table of Contents
 
